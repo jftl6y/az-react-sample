@@ -10,8 +10,16 @@ on:
     branches: [ "master" ]
 
 jobs:
-  test:
+  codeql:
     runs-on: ubuntu-latest
+
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
 
     steps:
     - name: Checkout repository
@@ -20,7 +28,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ matrix.language }}
+        languages: go, javascript
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
