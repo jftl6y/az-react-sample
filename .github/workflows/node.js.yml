@@ -10,6 +10,24 @@ on:
     branches: [ "master" ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+    
   build:
 
     runs-on: ubuntu-latest
@@ -41,8 +59,14 @@ jobs:
     - name: Run the tests
       run: npm test -- --coverage
 
-    - name: OWASP ZAP Full Scan
-      uses: zaproxy/action-full-scan@v0.4.0
+    - name: Create SBOM
+      uses: anchore/sbom-action@v0
+      with:
+        sbom-artifact-match: ".*\\.spdx$"
+
+    #- name: OWASP ZAP Full Scan
+    #  uses: zaproxy/action-full-scan@v0.4.0
+
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
