@@ -10,6 +10,29 @@ on:
     branches: [ "master" ]
 
 jobs:
+  CodeQL-Build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
     
   build:
 
@@ -42,15 +65,15 @@ jobs:
     - name: Run the tests
       run: npm test -- --coverage
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+    #- name: Initialize CodeQL
+    #  uses: github/codeql-action/init@v2
 
-    - run: |
-        make bootstrap
-        make release
+    #- run: |
+    #    make bootstrap
+    #    make release
     
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+   # - name: Perform CodeQL Analysis
+   #   uses: github/codeql-action/analyze@v2
 
     - name: Create SBOM
       uses: anchore/sbom-action@v0
