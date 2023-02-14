@@ -6,23 +6,20 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        
-        {BadSecret()}
-        
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
       </header>
     </div>
   );
-}
-function BadSecret(){
-  var password = "12345";
-  //return the password var in response
-
-  return(
-    <div>
-      <h1>My password is {password} </h1>
-      <p>Don't tell anyone!</p>
-    </div>
-  )
 }
 
 export default App;
