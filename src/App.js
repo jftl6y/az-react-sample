@@ -24,10 +24,12 @@ function App() {
 }
 function BadSecret(){
   var mySecretPassword = "12345";
+  /* <h1>My super secret password is {mySecretPassword}</h1>
+      <i>Don't tell anyone!</i>  */
   return(
     <div>
-      <h1>My super secret password is {mySecretPassword}</h1>
-      <i>Don't tell anyone!</i>
+      Hello
+
     </div>
   )
 }
